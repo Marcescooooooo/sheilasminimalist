@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto Detallado 2 - Shellasat Jewelry Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chain1-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Sheila's Minimalist Elegance</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="chains.html">Joyeria</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="payment-icon">
+            <a href="payment.html"><i class="fas fa-shopping-cart" title="Pagar"></i></a>
+        </div>
+        <div class="register-icon">
+            <a href="register.html"><i class="fas fa-user" title="Registrar"></i></a>
+        </div>
+    </header>
+
+    <main>
+        <section class="product-details">
+            <div class="product-images">
+                <div class="thumbnail-images">
+                    <img src="IMAGENES/mari.jpg" alt="Product Image" onclick="changeImage(this)">
+                    <img src="IMAGENES/mari.jpg" alt="Product Image" onclick="changeImage(this)">
+                    <img src="IMAGENES/luna.webp" alt="Product Image" onclick="changeImage(this)">
+                </div>
+                <div class="main-image">
+                    <img id="mainImage" src="IMAGENES/luna.webp" alt="Product Image">
+                </div>
+            </div>
+            <div class="product-specs">
+                <div class="product-info">
+                    <h2 id="productName">Nombre del Producto 2</h2>
+                    <p id="productPrice">500 EUR</p>
+                    <h3>Especificaciones</h3>
+                    <ul>
+                        <li>Material: <span id="productMaterial">Plata</span></li>
+                        <li>Dimensiones: <span id="productDimensions">6 cm</span></li>
+                        <li>Color: <span id="productColor">Plateado</span></li>
+                    </ul>
+                </div>
+                <p class="product-description" id="productDescription">Descripción detallada del producto 2. Incluye características, materiales, dimensiones, colores disponibles y cualquier otra información importante.</p>
+                <div class="product-actions">
+                    <div class="quantity">
+                        <label for="quantity">Cantidad:</label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1">
+                    </div>
+                    <button class="add-to-cart" onclick="addToCart()">Agregar al Carrito</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="related-products">
+            <h2>Productos Relacionados</h2>
+            <div class="related-products-container">
+                <div class="related-product">
+                    <img src="IMAGENES/mari.jpg" alt="Related Product">
+                    <h3>Producto Relacionado 1</h3>
+                </div>
+                <div class="related-product">
+                    <img src="IMAGENES/mari.jpg" alt="Related Product">
+                    <h3>Producto Relacionado 2</h3>
+                </div>
+                <div class="related-product">
+                    <img src="IMAGENES/mari.jpg" alt="Related Product">
+                    <h3>Producto Relacionado 3</h3>
+                </div>
+            </div>
+            <a href="chains.html" class="back-to-chains"><i class="fas fa-arrow-left"></i> Volver a Joyería</a>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Sheila's Minimalist Elegance. All rights reserved.</p>
+    </footer>
+    <script>
+        function changeImage(element) {
+            document.getElementById('mainImage').src = element.src;
+        }
+
+        function addToCart() {
+            const product = {
+                name: document.getElementById('productName').innerText,
+                material: document.getElementById('productMaterial').innerText,
+                dimensions: document.getElementById('productDimensions').innerText,
+                color: document.getElementById('productColor').innerText,
+                description: document.getElementById('productDescription').innerText,
+                quantity: document.getElementById('quantity').value,
+                image: document.getElementById('mainImage').src,
+                price: document.getElementById('productPrice').innerText
+            };
+
+            let cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+            cartProducts.push(product);
+            localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+
+            window.location.href = 'payment.html';
+        }
+    </script>
+</body>
+</html>

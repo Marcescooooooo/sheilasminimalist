@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras - Shellasat Jewelry Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="payment-styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">Sheila's Minimalist Elegance</div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="chains.html">Joyeria</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="register-icon">
+            <a href="register.html"><i class="fas fa-user" title="Registrar"></i></a>
+        </div>
+    </header>
+
+    <main>
+        <section class="cart">
+            <h2>Carrito de Compras</h2>
+            <div id="cartItems" class="cart-items"></div>
+            <div class="cart-actions">
+                <button id="finalizePurchase" class="finalize-purchase">Finalizar Compra</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Sheila's Minimalist Elegance. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const finalizePurchaseButton = document.getElementById('finalizePurchase');
+
+            function loadCartItems() {
+                const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+                cartItemsContainer.innerHTML = '';
+
+                cartProducts.forEach((product, index) => {
+                    const productElement = document.createElement('div');
+                    productElement.classList.add('cart-item');
+
+                    productElement.innerHTML = `
+                        <img src="${product.image}" alt="${product.name}">
+                        <div class="product-info">
+                            <h3>${product.name}</h3>
+                            <p>${product.price}</p>
+                            <p>Material: ${product.material}</p>
+                            <p>Dimensiones: ${product.dimensions}</p>
+                            <p>Color: ${product.color}</p>
+                            <p>Cantidad: ${product.quantity}</p>
+                        </div>
+                        <button class="remove-item" onclick="removeFromCart(${index})">Eliminar</button>
+                    `;
+
+                    cartItemsContainer.appendChild(productElement);
+                });
+
+                if (cartProducts.length === 0) {
+                    cartItemsContainer.innerHTML = '<p>No hay productos en el carrito.</p>';
+                }
+            }
+
+            window.removeFromCart = function(index) {
+                let cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+                cartProducts.splice(index, 1);
+                localStorage.setItem('cartProducts', JSON.stringify(cartProducts));
+                loadCartItems();
+            };
+
+            finalizePurchaseButton.onclick = function() {
+                const cartProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+                if (cartProducts.length > 0) {
+                    alert('Compra finalizada. Gracias por su compra!');
+                    localStorage.removeItem('cartProducts');
+                    loadCartItems();
+                } else {
+                    alert('No hay productos en el carrito.');
+                }
+            };
+
+            loadCartItems();
+        });
+    </script>
+</body>
+</html>
